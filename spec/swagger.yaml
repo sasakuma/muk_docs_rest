@@ -75,6 +75,32 @@ paths:
                   format: int32
                   description: "Info"
                   example: "11, 0, 0, 'final', 0"
+  /api/change_master_password:
+    post:
+      tags:
+        - "API"
+      summary: 'Change Master Password'
+      description: 'Changes the master password.'
+      produces:
+        - application/json
+      parameters:
+        - name: password_new
+          in: query
+          required: true
+          type: string
+          x-example: admin
+        - name: password_old
+          in: query
+          required: false
+          type: string
+          x-example: $kajsd!§?
+      responses:
+        '200':
+          description: 'Result'
+          schema:
+            type: boolean
+            description: "Result"
+            example: True
   /api/authenticate:
     post:
       tags:
@@ -2155,6 +2181,7 @@ paths:
               type: string
               format: binary
               description: "Report"
+              example: "File"
         '400':
           description: Arguments missing 
           schema:
@@ -2171,4 +2198,581 @@ paths:
                 type: string
                 description: "Error"
                 example: "token_invalid"
-                
+  /api/report{model}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Report'
+      description: 'Generate reports.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: model
+          in: path
+          required: true
+          type: string
+          x-example: "ir.model"
+        - name: report
+          in: query
+          required: true
+          type: string
+          x-example: "base.report_ir_model_overview"
+        - name: ids
+          in: query
+          required: true
+          type: string
+          x-example: [8]
+        - name: type
+          in: query
+          required: false
+          type: string
+          enum: [html, pdf]
+          x-example: pdf
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {}
+        - name: args
+          in: query
+          required: false
+          type: string
+          x-example: []
+        - name: kwargs
+          in: query
+          required: false
+          type: string
+          x-example: {}
+      responses:
+        '200':
+            description: Report
+            schema:
+              type: string
+              format: binary
+              description: "Report"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/report{model}/{report}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Report'
+      description: 'Generate reports.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: model
+          in: path
+          required: true
+          type: string
+          x-example: "ir.model"
+        - name: report
+          in: path
+          required: true
+          type: string
+          x-example: "base.report_ir_model_overview"
+        - name: ids
+          in: query
+          required: true
+          type: string
+          x-example: [8]
+        - name: type
+          in: query
+          required: false
+          type: string
+          enum: [html, pdf]
+          x-example: pdf
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {}
+        - name: args
+          in: query
+          required: false
+          type: string
+          x-example: []
+        - name: kwargs
+          in: query
+          required: false
+          type: string
+          x-example: {}
+      responses:
+        '200':
+            description: Report
+            schema:
+              type: string
+              format: binary
+              description: "Report"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/binary:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Binary'
+      description: 'Downloads a binary file.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: xmlid
+          in: query
+          required: false
+          type: string
+          x-example: "xmlid"
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: id
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 1
+        - name: field
+          in: query
+          required: false
+          type: string
+          x-example: "datas"
+        - name: filename
+          in: query
+          required: false
+          type: string
+          x-example: "document.pdf"
+        - name: filename_field
+          in: query
+          required: false
+          type: string
+          x-example: "datas_fname"
+        - name: unique
+          in: query
+          required: false
+          type: boolean
+          x-example: "False"
+        - name: mimetype
+          in: query
+          required: false
+          type: string
+          x-example: "application/pdf"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/binary/{xmlid}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Binary'
+      description: 'Downloads a binary file.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: xmlid
+          in: path
+          required: true
+          type: string
+          x-example: "xmlid"
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: id
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 1
+        - name: field
+          in: query
+          required: false
+          type: string
+          x-example: "datas"
+        - name: filename
+          in: query
+          required: false
+          type: string
+          x-example: "document.pdf"
+        - name: filename_field
+          in: query
+          required: false
+          type: string
+          x-example: "datas_fname"
+        - name: unique
+          in: query
+          required: false
+          type: boolean
+          x-example: "False"
+        - name: mimetype
+          in: query
+          required: false
+          type: string
+          x-example: "application/pdf"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/binary/{xmlid}/{filename}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Binary'
+      description: 'Downloads a binary file.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: xmlid
+          in: path
+          required: true
+          type: string
+          x-example: "xmlid"
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: id
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 1
+        - name: field
+          in: query
+          required: false
+          type: string
+          x-example: "datas"
+        - name: filename
+          in: path
+          required: true
+          type: string
+          x-example: "document.pdf"
+        - name: filename_field
+          in: query
+          required: false
+          type: string
+          x-example: "datas_fname"
+        - name: unique
+          in: query
+          required: false
+          type: boolean
+          x-example: "False"
+        - name: mimetype
+          in: query
+          required: false
+          type: string
+          x-example: "application/pdf"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/binary/{model}/{id}/{field}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Binary'
+      description: 'Downloads a binary file.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: xmlid
+          in: query
+          required: false
+          type: string
+          x-example: "xmlid"
+        - name: model
+          in: path
+          required: true
+          type: string
+          x-example: "res.partner"
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+        - name: field
+          in: path
+          required: true
+          type: string
+          x-example: "datas"
+        - name: filename
+          in: query
+          required: false
+          type: string
+          x-example: "document.pdf"
+        - name: filename_field
+          in: query
+          required: false
+          type: string
+          x-example: "datas_fname"
+        - name: unique
+          in: query
+          required: false
+          type: boolean
+          x-example: "False"
+        - name: mimetype
+          in: query
+          required: false
+          type: string
+          x-example: "application/pdf"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/binary/{model}/{id}/{field}/{filename}:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Binary'
+      description: 'Downloads a binary file.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: xmlid
+          in: query
+          required: false
+          type: string
+          x-example: "xmlid"
+        - name: model
+          in: path
+          required: true
+          type: string
+          x-example: "res.partner"
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+        - name: field
+          in: path
+          required: true
+          type: string
+          x-example: "datas"
+        - name: filename
+          in: path
+          required: true
+          type: string
+          x-example: "document.pdf"
+        - name: filename_field
+          in: query
+          required: false
+          type: string
+          x-example: "datas_fname"
+        - name: unique
+          in: query
+          required: false
+          type: boolean
+          x-example: "False"
+        - name: mimetype
+          in: query
+          required: false
+          type: string
+          x-example: "application/pdf"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
