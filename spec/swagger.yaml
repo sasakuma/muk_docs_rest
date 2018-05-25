@@ -2776,3 +2776,156 @@ paths:
                 type: string
                 description: "Error"
                 example: "token_invalid"
+  /api/database/list:
+    get:
+      tags:
+        - "Database"
+      summary: 'Database List'
+      description: 'List the available databases.'
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: 'System information'
+          schema:
+            properties:
+              databases:
+                type: array
+                items:
+                  type: string
+                  description: "Databases"
+                  example: "rest"
+              incompatible_databases:
+                  type: array
+                  items:
+                    type: string
+                    description: "Incompatible Databases"
+                    example: "rest_v10"
+  /api/database/create:
+    post:
+      tags:
+        - "Database"
+      summary: 'Database Create'
+      description: 'Creates a new database.'
+      produces:
+        - application/json
+      parameters:
+        - name: database_name
+          in: query
+          required: true
+          type: string
+          x-example: "rest"
+        - name: admin_login
+          in: query
+          required: true
+          type: string
+          x-example: "admin"
+        - name: admin_password
+          in: query
+          required: true
+          type: string
+          x-example: "admin"
+        - name: master_password
+          in: query
+          required: false
+          type: string
+          x-example: "admin"
+        - name: lang
+          in: query
+          required: false
+          type: string
+          x-example: "de_DE"
+        - name: country_code
+          in: query
+          required: false
+          type: string
+          x-example: "at"
+      responses:
+        '200':
+          description: 'Result'
+          schema:
+            type: boolean
+            description: "Result"
+            example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['master_password']"
+  /api/database/duplicate:
+    post:
+      tags:
+        - "Database"
+      summary: 'Database Duplicate'
+      description: 'Duplicate a database.'
+      produces:
+        - application/json
+      parameters:
+        - name: database_old
+          in: query
+          required: true
+          type: string
+          x-example: "rest"
+        - name: database_new
+          in: query
+          required: true
+          type: string
+          x-example: "copy"
+        - name: master_password
+          in: query
+          required: false
+          type: string
+          x-example: "admin"
+      responses:
+        '200':
+          description: 'Result'
+          schema:
+            type: boolean
+            description: "Result"
+            example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['master_password']"
+  /api/database/drop:
+    post:
+      tags:
+        - "Database"
+      summary: 'Database Drop'
+      description: 'Drops a database.'
+      produces:
+        - application/json
+      parameters:
+        - name: database_name
+          in: query
+          required: true
+          type: string
+          x-example: "rest"
+        - name: master_password
+          in: query
+          required: false
+          type: string
+          x-example: "admin"
+      responses:
+        '200':
+          description: 'Result'
+          schema:
+            type: boolean
+            description: "Result"
+            example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['master_password']"
