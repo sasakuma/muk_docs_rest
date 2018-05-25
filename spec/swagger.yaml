@@ -2093,3 +2093,84 @@ paths:
                 type: string
                 description: "Error"
                 example: "token_invalid"
+  /api/report:
+    get:
+      tags:
+        - "Reports and Files"
+      summary: 'Report'
+      description: 'Generate reports.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "ir.model"
+        - name: report
+          in: query
+          required: true
+          type: string
+          x-example: "base.report_ir_model_overview"
+        - name: ids
+          in: query
+          required: true
+          type: string
+          x-example: [8]
+        - name: type
+          in: query
+          required: false
+          type: string
+          enum: [html, pdf]
+          x-example: pdf
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {}
+        - name: args
+          in: query
+          required: false
+          type: string
+          x-example: []
+        - name: kwargs
+          in: query
+          required: false
+          type: string
+          x-example: {}
+      responses:
+        '200':
+            description: Time
+            
+              application/pdf:
+            schema:
+                schema:
+                  type: string
+                  format: binary
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+                
