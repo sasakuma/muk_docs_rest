@@ -46,8 +46,7 @@ paths:
       tags:
         - "API"
       summary: 'Version'
-      description: 'Request system information'
-      operationId: vesion
+      description: 'Request system information.'
       produces:
         - application/json
       parameters: []
@@ -60,7 +59,7 @@ paths:
                 type: integer
                 format: int32
                 description: "Version"
-                example: "2"
+                example: "1"
               server_serie:
                 type: string
                 description: "Server Serie"
@@ -141,3 +140,181 @@ paths:
                 type: string 
                 description: "Error"
                 example: "rest_api_not_supported"
+  /api/life:
+    get:
+      tags:
+        - "Authentication"
+      summary: 'Life'
+      description: 'Returns the remaining lifetime to a given token.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+      responses:
+        '200':
+            description: Time
+            schema:
+              properties:
+                token:
+                  type: integer
+                  format: int32
+                  description: "Time"
+                  example: 2342
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/life/{token}:
+    get:
+      tags:
+        - "Authentication"
+      summary: 'Life'
+      description: 'Returns the remaining lifetime to a given token.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: path
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+      responses:
+        '200':
+            description: Time
+            schema:
+              properties:
+                time:
+                  type: integer
+                  format: int32
+                  description: "Time"
+                  example: 2342
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/refresh:
+    post:
+      tags:
+        - "Authentication"
+      summary: 'Refresh'
+      description: 'Refreshes the token lifetime.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+      responses:
+        '200':
+            description: Status
+            schema:
+              properties:
+                time:
+                  type: boolean
+                  description: "Status"
+                  example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/close:
+    post:
+      tags:
+        - "Authentication"
+      summary: 'Close'
+      description: 'Closes the API connection.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+      responses:
+        '200':
+            description: Status
+            schema:
+              properties:
+                time:
+                  type: boolean
+                  description: "Status"
+                  example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
