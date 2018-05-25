@@ -44,7 +44,7 @@ paths:
   /api:
     get:
       tags:
-        - "Version"
+        - "API"
       summary: 'Version'
       description: 'Request system information'
       operationId: vesion
