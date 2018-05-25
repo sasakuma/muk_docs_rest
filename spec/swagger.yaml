@@ -68,3 +68,68 @@ paths:
                 items:
                   type: integer
                   format: int32
+  /api/authenticate:
+    post:
+      tags:
+        - "Authentication"
+      summary: 'Authenticate'
+      description: 'Generates the API token based on the given login informations.'
+      produces:
+        - application/json
+      parameters:
+        - name: password
+          in: query
+          required: true
+          type: string
+          x-example: demo
+        - name: login
+          in: query
+          required: true
+          type: string
+          x-example: demo
+        - name: db
+          in: query
+          required: true
+          type: string
+          x-example: demo
+      responses:
+        '200':
+          description: Token
+          schema:
+            properties:
+              token:
+                type: string
+                description: "Token"
+                example: "tFss-VxvSVm58NE-z7gVdg"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['password']"
+        '401':
+          description: Invalid login
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "invalid_login"
+        '404':
+          description: Invalid database
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "invalid_db"
+        '500':
+          description: REST API is not supported
+          schema:
+            properties:
+              error:
+                type: string 
+                description: "Error"
+                example: "rest_api_not_supported"
