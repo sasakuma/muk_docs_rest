@@ -1046,8 +1046,8 @@ paths:
     post:
       tags:
         - "Search & Read"
-      summary: 'Search'
-      description: 'Returns the search result.'
+      summary: 'Read'
+      description: 'Returns the search result of the given fields.'
       produces:
         - application/json
       parameters:
@@ -1142,8 +1142,8 @@ paths:
     post:
       tags:
         - "Search & Read"
-      summary: 'Search'
-      description: 'Returns the search result.'
+      summary: 'Read'
+      description: 'Returns the search result of the given fields.'
       produces:
         - application/json
       parameters:
@@ -1239,8 +1239,8 @@ paths:
     post:
       tags:
         - "Search & Read"
-      summary: 'Search'
-      description: 'Returns the search result.'
+      summary: 'Read'
+      description: 'Returns the search result of the given fields.'
       produces:
         - application/json
       parameters:
@@ -1335,8 +1335,8 @@ paths:
     post:
       tags:
         - "Search & Read"
-      summary: 'Search'
-      description: 'Returns the search result.'
+      summary: 'Read'
+      description: 'Returns the search result of the given fields.'
       produces:
         - application/json
       parameters:
@@ -1431,8 +1431,8 @@ paths:
     post:
       tags:
         - "Search & Read"
-      summary: 'Search'
-      description: 'Returns the search result.'
+      summary: 'Read'
+      description: 'Returns the search result of the given fields.'
       produces:
         - application/json
       parameters:
