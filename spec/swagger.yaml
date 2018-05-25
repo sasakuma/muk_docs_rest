@@ -1,7 +1,7 @@
 swagger: '2.0'
 
 info:
-  description: 'Restful API for [Odoo](https://www.odoo.com).'
+  description: 'Download [MuK Restful API](https://www.odoo.com/apps/modules/11.0/muk_rest/) for [Odoo](https://www.odoo.com).'
   version: '2.0.0'
   title: 'MuK REST API'
   contact:
@@ -37,7 +37,7 @@ tags:
     description: 'Operations to generate reports or download files'
   - name: 'Database'
     description: 'Operations interact with the database'
-  - name: 'Backup/Restore'
+  - name: 'Backup & Restore'
     description: 'Operations backup or restore the database'
 
 paths:
@@ -135,7 +135,7 @@ paths:
                 description: "Token"
                 example: "tFss-VxvSVm58NE-z7gVdg"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -194,7 +194,7 @@ paths:
               description: "Time"
               example: 2342
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -237,7 +237,7 @@ paths:
               description: "Time"
               example: 2342
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -279,7 +279,7 @@ paths:
               description: "Status"
               example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -321,7 +321,7 @@ paths:
               description: "Status"
               example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -477,7 +477,7 @@ paths:
                   ]
                   zip: 
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -633,7 +633,7 @@ paths:
                   ]
                   zip: 
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -790,7 +790,7 @@ paths:
                   ]
                   zip: 
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -946,7 +946,7 @@ paths:
                   ]
                   zip: 
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1035,7 +1035,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1129,7 +1129,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1223,7 +1223,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1318,7 +1318,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1412,7 +1412,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1506,7 +1506,7 @@ paths:
                   id: 1
                   name: "Awesome Inc"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1738,7 +1738,7 @@ paths:
                   ]
                   zip: false
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1800,7 +1800,7 @@ paths:
               description: "Status"
               example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -1857,7 +1857,7 @@ paths:
               description: "Status"
               example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2104,7 +2104,7 @@ paths:
                   ]
                   zip: false
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2126,7 +2126,7 @@ paths:
       summary: 'Report'
       description: 'Generate reports.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2183,7 +2183,7 @@ paths:
               description: "Report"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2205,7 +2205,7 @@ paths:
       summary: 'Report'
       description: 'Generate reports.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2262,7 +2262,7 @@ paths:
               description: "Report"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2284,7 +2284,7 @@ paths:
       summary: 'Report'
       description: 'Generate reports.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2341,7 +2341,7 @@ paths:
               description: "Report"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2363,7 +2363,7 @@ paths:
       summary: 'Binary'
       description: 'Downloads a binary file.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2425,7 +2425,7 @@ paths:
               description: "Binary"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2447,7 +2447,7 @@ paths:
       summary: 'Binary'
       description: 'Downloads a binary file.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2509,7 +2509,7 @@ paths:
               description: "Binary"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2531,7 +2531,7 @@ paths:
       summary: 'Binary'
       description: 'Downloads a binary file.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2593,7 +2593,7 @@ paths:
               description: "Binary"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2615,7 +2615,7 @@ paths:
       summary: 'Binary'
       description: 'Downloads a binary file.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2677,7 +2677,7 @@ paths:
               description: "Binary"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2699,7 +2699,7 @@ paths:
       summary: 'Binary'
       description: 'Downloads a binary file.'
       produces:
-        - application/json
+        - application/octet-stream
       parameters:
         - name: token
           in: query
@@ -2761,7 +2761,7 @@ paths:
               description: "Binary"
               example: "File"
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2849,7 +2849,7 @@ paths:
             description: "Result"
             example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2888,7 +2888,7 @@ paths:
             description: "Result"
             example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
@@ -2922,7 +2922,94 @@ paths:
             description: "Result"
             example: True
         '400':
-          description: Arguments missing 
+          description: Arguments missing or invalid 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['master_password']"
+  /api/database/backup:
+    post:
+      tags:
+        - "Backup & Restore"
+      summary: 'Database Backup'
+      description: 'Creates a backup.'
+      produces:
+        - application/octet-stream
+      parameters:
+        - name: database_name
+          in: query
+          required: true
+          type: string
+          x-example: "rest"
+        - name: master_password
+          in: query
+          required: false
+          type: string
+          x-example: "admin"
+        - name: backup_format
+          in: query
+          required: false
+          type: string
+          enum: [zip, dump]
+          x-example: "zip"
+      responses:
+        '200':
+            description: Binary
+            schema:
+              type: string
+              format: binary
+              description: "Binary"
+              example: "File"
+        '400':
+          description: Arguments missing or invalid 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['master_password']"
+  /api/database/restore:
+    post:
+      tags:
+        - "Backup & Restore"
+      summary: 'Database Restore'
+      description: 'Restores a backup.'
+      produces:
+        - application/json
+      parameters:
+        - name: database_name
+          in: query
+          required: true
+          type: string
+          x-example: "rest"
+        - name: backup_file
+          in: query
+          required: true
+          type: string
+          format: binary
+          x-example: "File"
+        - name: master_password
+          in: query
+          required: false
+          type: string
+          x-example: "admin"
+        - name: backup_format
+          in: query
+          required: false
+          type: string
+          enum: [zip, dump]
+          x-example: "zip"
+      responses:
+        '200':
+          description: 'Result'
+          schema:
+            type: boolean
+            description: "Result"
+            example: True
+        '400':
+          description: Arguments missing or invalid 
           schema:
             properties:
               error:
