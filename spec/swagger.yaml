@@ -29,7 +29,7 @@ tags:
     description: 'Operations to create and refresh a token'
   - name: 'Search & Read'
     description: 'Operations to read data from the system'
-  - name: 'Create/Write/Delete'
+  - name: 'Create & Write & Delete'
     description: 'Operations to manipulate data from the system'
   - name: 'Generic Request'
     description: 'A generic request to call any method in the system'
@@ -163,12 +163,10 @@ paths:
         '200':
             description: Time
             schema:
-              properties:
-                token:
-                  type: integer
-                  format: int32
-                  description: "Time"
-                  example: 2342
+              type: integer
+              format: int32
+              description: "Time"
+              example: 2342
         '400':
           description: Arguments missing 
           schema:
@@ -208,12 +206,10 @@ paths:
         '200':
             description: Time
             schema:
-              properties:
-                time:
-                  type: integer
-                  format: int32
-                  description: "Time"
-                  example: 2342
+              type: integer
+              format: int32
+              description: "Time"
+              example: 2342
         '400':
           description: Arguments missing 
           schema:
@@ -253,11 +249,9 @@ paths:
         '200':
             description: Status
             schema:
-              properties:
-                time:
-                  type: boolean
-                  description: "Status"
-                  example: True
+              type: boolean
+              description: "Status"
+              example: True
         '400':
           description: Arguments missing 
           schema:
@@ -297,11 +291,9 @@ paths:
         '200':
             description: Status
             schema:
-              properties:
-                time:
-                  type: boolean
-                  description: "Status"
-                  example: True
+              type: boolean
+              description: "Status"
+              example: True
         '400':
           description: Arguments missing 
           schema:
@@ -384,82 +376,80 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      __last_update: 2017-12-31 03:13:29
-                      active: true
-                      bank_ids: []
-                      barcode: false
-                      category_id: []
-                      child_ids: []
-                      city: 
-                      color: 0
-                      comment: false
-                      commercial_company_name: My Company
-                      commercial_partner_country_id: []
-                      commercial_partner_id: [
-                          1
-                          My Company
-                      ]
-                      company_id: [
-                          1
-                          My Company
-                      ]
-                      company_name: false
-                      company_type: company
-                      contact_address: My Company\n\n\n  \n
-                      country_id: []
-                      create_date: false
-                      create_uid: []
-                      credit_limit: 0.0
-                      customer: false
-                      date: false
-                      display_name: My Company
-                      email: [email protected]
-                      email_formatted: My Company <[email protected]>
-                      employee: false
-                      function: false
-                      id: 1
-                      image: false
-                      image_medium: false
-                      image_small: false
-                      industry_id: []
-                      is_company: true
-                      lang: en_US
-                      mobile: false
-                      name: My Company
-                      parent_id: []
-                      parent_name: false
-                      partner_share: true
-                      phone: 
-                      ref: false
-                      self: [
-                          1
-                          My Company
-                      ]
-                      state_id: []
-                      street: 
-                      street2: false
-                      supplier: false
-                      title: []
-                      type: contact
-                      tz: false
-                      tz_offset: +0000
-                      user_id: []
-                      user_ids: []
-                      vat: false
-                      website: http://www.yourcompany.com
-                      write_date: 2017-12-31 03:13:29
-                      write_uid: [
-                          1
-                          Administrator
-                      ]
-                      zip: 
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  __last_update: 2017-12-31 03:13:29
+                  active: true
+                  bank_ids: []
+                  barcode: false
+                  category_id: []
+                  child_ids: []
+                  city: 
+                  color: 0
+                  comment: false
+                  commercial_company_name: My Company
+                  commercial_partner_country_id: []
+                  commercial_partner_id: [
+                      1
+                      My Company
+                  ]
+                  company_id: [
+                      1
+                      My Company
+                  ]
+                  company_name: false
+                  company_type: company
+                  contact_address: My Company\n\n\n  \n
+                  country_id: []
+                  create_date: false
+                  create_uid: []
+                  credit_limit: 0.0
+                  customer: false
+                  date: false
+                  display_name: My Company
+                  email: [email protected]
+                  email_formatted: My Company <[email protected]>
+                  employee: false
+                  function: false
+                  id: 1
+                  image: false
+                  image_medium: false
+                  image_small: false
+                  industry_id: []
+                  is_company: true
+                  lang: en_US
+                  mobile: false
+                  name: My Company
+                  parent_id: []
+                  parent_name: false
+                  partner_share: true
+                  phone: 
+                  ref: false
+                  self: [
+                      1
+                      My Company
+                  ]
+                  state_id: []
+                  street: 
+                  street2: false
+                  supplier: false
+                  title: []
+                  type: contact
+                  tz: false
+                  tz_offset: +0000
+                  user_id: []
+                  user_ids: []
+                  vat: false
+                  website: http://www.yourcompany.com
+                  write_date: 2017-12-31 03:13:29
+                  write_uid: [
+                      1
+                      Administrator
+                  ]
+                  zip: 
         '400':
           description: Arguments missing 
           schema:
@@ -542,82 +532,80 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      __last_update: 2017-12-31 03:13:29
-                      active: true
-                      bank_ids: []
-                      barcode: false
-                      category_id: []
-                      child_ids: []
-                      city: 
-                      color: 0
-                      comment: false
-                      commercial_company_name: My Company
-                      commercial_partner_country_id: []
-                      commercial_partner_id: [
-                          1
-                          My Company
-                      ]
-                      company_id: [
-                          1
-                          My Company
-                      ]
-                      company_name: false
-                      company_type: company
-                      contact_address: My Company\n\n\n  \n
-                      country_id: []
-                      create_date: false
-                      create_uid: []
-                      credit_limit: 0.0
-                      customer: false
-                      date: false
-                      display_name: My Company
-                      email: [email protected]
-                      email_formatted: My Company <[email protected]>
-                      employee: false
-                      function: false
-                      id: 1
-                      image: false
-                      image_medium: false
-                      image_small: false
-                      industry_id: []
-                      is_company: true
-                      lang: en_US
-                      mobile: false
-                      name: My Company
-                      parent_id: []
-                      parent_name: false
-                      partner_share: true
-                      phone: 
-                      ref: false
-                      self: [
-                          1
-                          My Company
-                      ]
-                      state_id: []
-                      street: 
-                      street2: false
-                      supplier: false
-                      title: []
-                      type: contact
-                      tz: false
-                      tz_offset: +0000
-                      user_id: []
-                      user_ids: []
-                      vat: false
-                      website: http://www.yourcompany.com
-                      write_date: 2017-12-31 03:13:29
-                      write_uid: [
-                          1
-                          Administrator
-                      ]
-                      zip: 
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  __last_update: 2017-12-31 03:13:29
+                  active: true
+                  bank_ids: []
+                  barcode: false
+                  category_id: []
+                  child_ids: []
+                  city: 
+                  color: 0
+                  comment: false
+                  commercial_company_name: My Company
+                  commercial_partner_country_id: []
+                  commercial_partner_id: [
+                      1
+                      My Company
+                  ]
+                  company_id: [
+                      1
+                      My Company
+                  ]
+                  company_name: false
+                  company_type: company
+                  contact_address: My Company\n\n\n  \n
+                  country_id: []
+                  create_date: false
+                  create_uid: []
+                  credit_limit: 0.0
+                  customer: false
+                  date: false
+                  display_name: My Company
+                  email: [email protected]
+                  email_formatted: My Company <[email protected]>
+                  employee: false
+                  function: false
+                  id: 1
+                  image: false
+                  image_medium: false
+                  image_small: false
+                  industry_id: []
+                  is_company: true
+                  lang: en_US
+                  mobile: false
+                  name: My Company
+                  parent_id: []
+                  parent_name: false
+                  partner_share: true
+                  phone: 
+                  ref: false
+                  self: [
+                      1
+                      My Company
+                  ]
+                  state_id: []
+                  street: 
+                  street2: false
+                  supplier: false
+                  title: []
+                  type: contact
+                  tz: false
+                  tz_offset: +0000
+                  user_id: []
+                  user_ids: []
+                  vat: false
+                  website: http://www.yourcompany.com
+                  write_date: 2017-12-31 03:13:29
+                  write_uid: [
+                      1
+                      Administrator
+                  ]
+                  zip: 
         '400':
           description: Arguments missing 
           schema:
@@ -701,82 +689,80 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      __last_update: 2017-12-31 03:13:29
-                      active: true
-                      bank_ids: []
-                      barcode: false
-                      category_id: []
-                      child_ids: []
-                      city: 
-                      color: 0
-                      comment: false
-                      commercial_company_name: My Company
-                      commercial_partner_country_id: []
-                      commercial_partner_id: [
-                          1
-                          My Company
-                      ]
-                      company_id: [
-                          1
-                          My Company
-                      ]
-                      company_name: false
-                      company_type: company
-                      contact_address: My Company\n\n\n  \n
-                      country_id: []
-                      create_date: false
-                      create_uid: []
-                      credit_limit: 0.0
-                      customer: false
-                      date: false
-                      display_name: My Company
-                      email: [email protected]
-                      email_formatted: My Company <[email protected]>
-                      employee: false
-                      function: false
-                      id: 1
-                      image: false
-                      image_medium: false
-                      image_small: false
-                      industry_id: []
-                      is_company: true
-                      lang: en_US
-                      mobile: false
-                      name: My Company
-                      parent_id: []
-                      parent_name: false
-                      partner_share: true
-                      phone: 
-                      ref: false
-                      self: [
-                          1
-                          My Company
-                      ]
-                      state_id: []
-                      street: 
-                      street2: false
-                      supplier: false
-                      title: []
-                      type: contact
-                      tz: false
-                      tz_offset: +0000
-                      user_id: []
-                      user_ids: []
-                      vat: false
-                      website: http://www.yourcompany.com
-                      write_date: 2017-12-31 03:13:29
-                      write_uid: [
-                          1
-                          Administrator
-                      ]
-                      zip: 
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  __last_update: 2017-12-31 03:13:29
+                  active: true
+                  bank_ids: []
+                  barcode: false
+                  category_id: []
+                  child_ids: []
+                  city: 
+                  color: 0
+                  comment: false
+                  commercial_company_name: My Company
+                  commercial_partner_country_id: []
+                  commercial_partner_id: [
+                      1
+                      My Company
+                  ]
+                  company_id: [
+                      1
+                      My Company
+                  ]
+                  company_name: false
+                  company_type: company
+                  contact_address: My Company\n\n\n  \n
+                  country_id: []
+                  create_date: false
+                  create_uid: []
+                  credit_limit: 0.0
+                  customer: false
+                  date: false
+                  display_name: My Company
+                  email: [email protected]
+                  email_formatted: My Company <[email protected]>
+                  employee: false
+                  function: false
+                  id: 1
+                  image: false
+                  image_medium: false
+                  image_small: false
+                  industry_id: []
+                  is_company: true
+                  lang: en_US
+                  mobile: false
+                  name: My Company
+                  parent_id: []
+                  parent_name: false
+                  partner_share: true
+                  phone: 
+                  ref: false
+                  self: [
+                      1
+                      My Company
+                  ]
+                  state_id: []
+                  street: 
+                  street2: false
+                  supplier: false
+                  title: []
+                  type: contact
+                  tz: false
+                  tz_offset: +0000
+                  user_id: []
+                  user_ids: []
+                  vat: false
+                  website: http://www.yourcompany.com
+                  write_date: 2017-12-31 03:13:29
+                  write_uid: [
+                      1
+                      Administrator
+                  ]
+                  zip: 
         '400':
           description: Arguments missing 
           schema:
@@ -859,82 +845,80 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      __last_update: 2017-12-31 03:13:29
-                      active: true
-                      bank_ids: []
-                      barcode: false
-                      category_id: []
-                      child_ids: []
-                      city: 
-                      color: 0
-                      comment: false
-                      commercial_company_name: My Company
-                      commercial_partner_country_id: []
-                      commercial_partner_id: [
-                          1
-                          My Company
-                      ]
-                      company_id: [
-                          1
-                          My Company
-                      ]
-                      company_name: false
-                      company_type: company
-                      contact_address: My Company\n\n\n  \n
-                      country_id: []
-                      create_date: false
-                      create_uid: []
-                      credit_limit: 0.0
-                      customer: false
-                      date: false
-                      display_name: My Company
-                      email: [email protected]
-                      email_formatted: My Company <[email protected]>
-                      employee: false
-                      function: false
-                      id: 1
-                      image: false
-                      image_medium: false
-                      image_small: false
-                      industry_id: []
-                      is_company: true
-                      lang: en_US
-                      mobile: false
-                      name: My Company
-                      parent_id: []
-                      parent_name: false
-                      partner_share: true
-                      phone: 
-                      ref: false
-                      self: [
-                          1
-                          My Company
-                      ]
-                      state_id: []
-                      street: 
-                      street2: false
-                      supplier: false
-                      title: []
-                      type: contact
-                      tz: false
-                      tz_offset: +0000
-                      user_id: []
-                      user_ids: []
-                      vat: false
-                      website: http://www.yourcompany.com
-                      write_date: 2017-12-31 03:13:29
-                      write_uid: [
-                          1
-                          Administrator
-                      ]
-                      zip: 
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  __last_update: 2017-12-31 03:13:29
+                  active: true
+                  bank_ids: []
+                  barcode: false
+                  category_id: []
+                  child_ids: []
+                  city: 
+                  color: 0
+                  comment: false
+                  commercial_company_name: My Company
+                  commercial_partner_country_id: []
+                  commercial_partner_id: [
+                      1
+                      My Company
+                  ]
+                  company_id: [
+                      1
+                      My Company
+                  ]
+                  company_name: false
+                  company_type: company
+                  contact_address: My Company\n\n\n  \n
+                  country_id: []
+                  create_date: false
+                  create_uid: []
+                  credit_limit: 0.0
+                  customer: false
+                  date: false
+                  display_name: My Company
+                  email: [email protected]
+                  email_formatted: My Company <[email protected]>
+                  employee: false
+                  function: false
+                  id: 1
+                  image: false
+                  image_medium: false
+                  image_small: false
+                  industry_id: []
+                  is_company: true
+                  lang: en_US
+                  mobile: false
+                  name: My Company
+                  parent_id: []
+                  parent_name: false
+                  partner_share: true
+                  phone: 
+                  ref: false
+                  self: [
+                      1
+                      My Company
+                  ]
+                  state_id: []
+                  street: 
+                  street2: false
+                  supplier: false
+                  title: []
+                  type: contact
+                  tz: false
+                  tz_offset: +0000
+                  user_id: []
+                  user_ids: []
+                  vat: false
+                  website: http://www.yourcompany.com
+                  write_date: 2017-12-31 03:13:29
+                  write_uid: [
+                      1
+                      Administrator
+                  ]
+                  zip: 
         '400':
           description: Arguments missing 
           schema:
@@ -1017,15 +1001,13 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
         '400':
           description: Arguments missing 
           schema:
@@ -1113,15 +1095,13 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
         '400':
           description: Arguments missing 
           schema:
@@ -1209,15 +1189,13 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
         '400':
           description: Arguments missing 
           schema:
@@ -1306,15 +1284,13 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
         '400':
           description: Arguments missing 
           schema:
@@ -1402,15 +1378,13 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
         '400':
           description: Arguments missing 
           schema:
@@ -1498,15 +1472,243 @@ paths:
         '200':
             description: List of Records
             schema:
-              properties:
-                records:
-                  type: array
-                  items:
-                    type: string
-                    description: "Record"
-                    example:
-                      id: 1
-                      name: "Awesome Inc"
+              type: array
+              items:
+                type: string
+                description: "Record"
+                example:
+                  id: 1
+                  name: "Awesome Inc"
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/create:
+    post:
+      tags:
+        - "Create & Write & Delete"
+      summary: 'Create'
+      description: 'Creates a new record.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: values
+          in: query
+          required: false
+          type: string
+          x-example: {"name": "MuK IT"}
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {"default_phone": "0000"}
+      responses:
+        '200':
+            description: Record
+            schema:
+              type: string
+              description: "Record"
+              example:
+                __last_update: 2018-05-25 17:23:59
+                active: true
+                activity_date_deadline: false
+                activity_ids: []
+                activity_state: false
+                activity_summary: false
+                activity_type_id: []
+                activity_user_id: []
+                bank_account_count: 0
+                bank_ids: []
+                barcode: false
+                calendar_last_notif_ack: false
+                category_id: []
+                channel_ids: []
+                child_ids: []
+                city: false
+                color: 0
+                comment: false
+                commercial_company_name: false
+                commercial_partner_country_id: []
+                commercial_partner_id: [
+                    577
+                    MuK IT
+                ]
+                company_id: [
+                    1
+                    Awesome Inc
+                ]
+                company_name: false
+                company_type: person
+                contact_address: \n\n  \n
+                contract_ids: []
+                contracts_count: 0
+                country_id: []
+                create_date: 2018-05-25 17:23:59
+                create_uid: [
+                    6
+                    Demo
+                ]
+                credit: 0
+                credit_limit: 0
+                currency_id: [
+                    1
+                    EUR
+                ]
+                customer: true
+                date: false
+                debit: 0
+                debit_limit: 0
+                display_name: MuK IT
+                email: false
+                email_formatted: MuK IT <False>
+                employee: false
+                function: false
+                has_unreconciled_entries: false
+                id: 577
+                im_status: offline
+                image: 16.04 Kb
+                image_medium: 11.45 Kb
+                image_small: 3.66 Kb
+                industry_id: []
+                invoice_ids: []
+                invoice_warn: no-message
+                invoice_warn_msg: false
+                is_company: false
+                journal_item_count: 0
+                lang: en_US
+                last_time_entries_checked: false
+                last_website_so_id: []
+                meeting_count: 0
+                meeting_ids: []
+                message_bounce: 0
+                message_channel_ids: []
+                message_follower_ids: [
+                    448
+                    Awesome Inc Demo
+                ]
+                message_ids: [
+                    678
+                    MuK IT
+                ]
+                message_is_follower: true
+                message_last_post: false
+                message_needaction: false
+                message_needaction_counter: 0
+                message_partner_ids: [
+                    563
+                    Awesome Inc Demo
+                ]
+                message_unread: false
+                message_unread_counter: 0
+                mobile: false
+                name: MuK IT
+                opportunity_count: 0
+                opportunity_ids: []
+                opt_out: false
+                parent_id: []
+                parent_name: false
+                partner_share: true
+                payment_token_count: 0
+                payment_token_ids: []
+                phone: 0000
+                picking_warn: no-message
+                picking_warn_msg: false
+                pos_order_count: 0
+                property_account_payable_id: [
+                    122
+                    330000 Verbindlichkeiten aus Lieferungen u. Leistungen Inland
+                ]
+                property_account_position_id: []
+                property_account_receivable_id: [
+                    73
+                    200000 2000 bis 2007 Forderungen aus Lief. und Leist. Inland
+                ]
+                property_payment_term_id: []
+                property_product_pricelist: [
+                    1
+                    Public Pricelist (EUR)
+                ]
+                property_purchase_currency_id: []
+                property_stock_customer: [
+                    9
+                    Lagerort beim Partner/Kunden
+                ]
+                property_stock_supplier: [
+                    8
+                    Lagerort beim Partner/Lieferanten
+                ]
+                property_supplier_payment_term_id: []
+                purchase_order_count: 0
+                purchase_warn: no-message
+                purchase_warn_msg: false
+                ref: false
+                ref_company_ids: []
+                sale_order_count: 0
+                sale_order_ids: []
+                sale_warn: no-message
+                sale_warn_msg: false
+                self: [
+                    577
+                    MuK IT
+                ]
+                signup_expiration: false
+                signup_token: false
+                signup_type: false
+                signup_url: false
+                signup_valid: false
+                state_id: []
+                street: false
+                street2: false
+                supplier: false
+                supplier_invoice_count: 0
+                task_count: 0
+                task_ids: []
+                team_id: []
+                title: []
+                total_invoiced: 0
+                trust: normal
+                type: contact
+                tz: false
+                tz_offset: +0000
+                user_id: []
+                user_ids: []
+                vat: false
+                website: false
+                website_message_ids: []
+                wishlist_ids: []
+                write_date: 2018-05-25 17:23:59
+                write_uid: [
+                    6
+                    Demo
+                ]
+                zip: false
         '400':
           description: Arguments missing 
           schema:
