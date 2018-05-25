@@ -2150,13 +2150,11 @@ paths:
           x-example: {}
       responses:
         '200':
-            description: Time
-            
-              application/pdf:
+            description: Report
             schema:
-                schema:
-                  type: string
-                  format: binary
+              type: string
+              format: binary
+              description: "Report"
         '400':
           description: Arguments missing 
           schema:
