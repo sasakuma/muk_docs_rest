@@ -1725,3 +1725,122 @@ paths:
                 type: string
                 description: "Error"
                 example: "token_invalid"
+  /api/write:
+    post:
+      tags:
+        - "Create & Write & Delete"
+      summary: 'Create'
+      description: 'Creates a new record.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: ids
+          in: query
+          required: true
+          type: string
+          x-example: [1, 2]
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: values
+          in: query
+          required: false
+          type: string
+          x-example: {"name": "MuK IT"}
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {"default_phone": "0000"}
+      responses:
+        '200':
+            description: Status
+            schema:
+              type: boolean
+              description: "Status"
+              example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/unlink:
+    post:
+      tags:
+        - "Create & Write & Delete"
+      summary: 'Unlink'
+      description: 'Deletes an existing record.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: ids
+          in: query
+          required: true
+          type: string
+          x-example: [1, 2]
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {"default_phone": "0000"}
+      responses:
+        '200':
+            description: Status
+            schema:
+              type: boolean
+              description: "Status"
+              example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
