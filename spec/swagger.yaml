@@ -27,7 +27,7 @@ tags:
     description: 'General API operations'
   - name: 'Authentication'
     description: 'Operations to create and refresh a token'
-  - name: 'Read/Search'
+  - name: 'Search & Read'
     description: 'Operations to read data from the system'
   - name: 'Create/Write/Delete'
     description: 'Operations to manipulate data from the system'
@@ -302,6 +302,164 @@ paths:
                   type: boolean
                   description: "Status"
                   example: True
+        '400':
+          description: Arguments missing 
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "arguments_missing ['token']"
+        '403':
+          description: Invalid token
+          schema:
+            properties:
+              error:
+                type: string
+                description: "Error"
+                example: "token_invalid"
+  /api/search:
+    post:
+      tags:
+        - "Search & Read"
+      summary: 'Search'
+      description: 'Returns the search result.'
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: query
+          required: true
+          type: string
+          x-example: "tFss-VxvSVm58NE-z7gVdg"
+        - name: db
+          in: query
+          required: false
+          type: string
+          x-example: demo
+        - name: id
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 1
+        - name: model
+          in: query
+          required: false
+          type: string
+          x-example: "res.partner"
+        - name: domain
+          in: query
+          required: false
+          type: string
+          x-example: [["id", "=", 1]]
+        - name: context
+          in: query
+          required: false
+          type: string
+          x-example: {"bin_size": true}
+        - name: count
+          in: query
+          required: false
+          type: boolean
+          x-example: demo
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 80
+        - name: offset
+          in: query
+          required: false
+          type: integer
+          format: int32
+          x-example: 0
+        - name: order
+          in: query
+          required: false
+          type: string
+          x-example: name desc
+      responses:
+        '200':
+            description: List of Records
+            schema:
+              properties:
+                records:
+                  type: array
+                  items:
+                    type: string
+                    description: "Record"
+                    example:
+                      __last_update: 2017-12-31 03:13:29
+                      active: true
+                      bank_ids: []
+                      barcode: false
+                      category_id: []
+                      child_ids: []
+                      city: 
+                      color: 0
+                      comment: false
+                      commercial_company_name: My Company
+                      commercial_partner_country_id: []
+                      commercial_partner_id: [
+                          1
+                          My Company
+                      ]
+                      company_id: [
+                          1
+                          My Company
+                      ]
+                      company_name: false
+                      company_type: company
+                      contact_address: My Company\n\n\n  \n
+                      country_id: []
+                      create_date: false
+                      create_uid: []
+                      credit_limit: 0.0
+                      customer: false
+                      date: false
+                      display_name: My Company
+                      email: [email protected]
+                      email_formatted: My Company <[email protected]>
+                      employee: false
+                      function: false
+                      id: 1
+                      image: false
+                      image_medium: false
+                      image_small: false
+                      industry_id: []
+                      is_company: true
+                      lang: en_US
+                      mobile: false
+                      name: My Company
+                      parent_id: []
+                      parent_name: false
+                      partner_share: true
+                      phone: 
+                      ref: false
+                      self: [
+                          1
+                          My Company
+                      ]
+                      state_id: []
+                      street: 
+                      street2: false
+                      supplier: false
+                      title: []
+                      type: contact
+                      tz: false
+                      tz_offset: +0000
+                      user_id: []
+                      user_ids: []
+                      vat: false
+                      website: http://www.yourcompany.com
+                      write_date: 2017-12-31 03:13:29
+                      write_uid: [
+                          1
+                          Administrator
+                      ]
+                      zip: 
         '400':
           description: Arguments missing 
           schema:
