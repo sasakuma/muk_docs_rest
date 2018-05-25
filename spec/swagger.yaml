@@ -13,18 +13,18 @@ info:
   x-logo:
     url: 'https://mukit.at/theme_crafito/static/src/img/logo.png'
     
-    
 schemes:
   - 'http'
   - 'https'
 host: 'demo.mukit.at'
-basePath: '/api'
 
 externalDocs:
   description: 'Documentation and Examples'
-  url: 'https://github.com/muk-it/muk_docs'
+  url: 'https://github.com/muk-it/muk_docs/tree/11.0/muk_rest'
 
 tags:
+  - name: 'API'
+    description: 'General API operations'
   - name: 'Authentication'
     description: 'Operations to create and refresh a token'
   - name: 'Read/Search'
@@ -41,43 +41,30 @@ tags:
     description: 'Operations backup or restore the database'
 
 paths:
-  '/authenticate':
-    post:
+  /api:
+    get:
       tags:
-        - 'Authentication'
-      summary: 'Generate API Token'
-      description: 'Generates the API token based on the given login informations'
-      operationId: 'authenticate'
-      consumes:
-      - 'text/html'
-      - 'application/xml'
-      - 'application/xhtml+xml'
+        - "Version"
+      summary: 'Version'
+      description: 'Request system information'
+      operationId: vesion
       produces:
-      - 'application/json'
-      parameters:
-        - name: 'db'
-          in: 'query'
-          type: string
-          required: true
-          description: "The database"
-        - name: 'login'
-          in: 'query'
-          type: string
-          required: true
-          description: "User login"
-        - name: 'password'
-          in: 'query'
-          type: string
-          required: true
-          description: "User password"
+        - application/json
+      parameters: []
       responses:
-        200:
-          description: "successful operation"
-        400:
-          description: "arguments missing"
-        401:
-          description: "invalid login"
-        404:
-          description: "invalid db"
-        500:
-          description: "rest api is not supported"
+        '200':
+          description: 'System information'
+          schema:
+            properties:
+              api_version:
+                type: integer
+                format: int32
+              server_serie:
+                type: string
+              server_version:
+                type: string
+              server_version_info:
+                type: array
+                items:
+                  type: integer
+                  format: int32
