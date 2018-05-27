@@ -1,0 +1,4170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Download [MuK Restful API](https://www.odoo.com/apps/modules/11.0/muk_rest/) for [Odoo](https://www.odoo.com).",
+    "version": "2.0.0",
+    "title": "MuK REST API",
+    "contact": {
+      "email": "support@mukit.at",
+      "url": "https://www.mukit.at"
+    },
+    "license": {
+      "name": "Odoo Proprietary License v1.0",
+      "url": "https://www.odoo.com/documentation/user/11.0/legal/licenses/licenses.html#licenses"
+    },
+    "x-logo": {
+      "url": "https://mukit.at/theme_crafito/static/src/img/logo.png"
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "host": "demo.mukit.at",
+  "externalDocs": {
+    "description": "Documentation and Examples",
+    "url": "https://github.com/muk-it/muk_docs/tree/11.0/muk_rest"
+  },
+  "tags": [
+    {
+      "name": "API",
+      "description": "General API operations"
+    },
+    {
+      "name": "Authentication",
+      "description": "Operations to create and refresh a token"
+    },
+    {
+      "name": "Search & Read",
+      "description": "Operations to read data from the system"
+    },
+    {
+      "name": "Create & Write & Delete",
+      "description": "Operations to manipulate data from the system"
+    },
+    {
+      "name": "Generic Request",
+      "description": "A generic request to call any method in the system"
+    },
+    {
+      "name": "Reports & Files",
+      "description": "Operations to generate reports or download files"
+    },
+    {
+      "name": "Database",
+      "description": "Operations interact with the database"
+    },
+    {
+      "name": "Backup & Restore",
+      "description": "Operations backup or restore the database"
+    }
+  ],
+  "paths": {
+    "/api": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "Version",
+        "description": "Request system information.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "System information",
+            "schema": {
+              "properties": {
+                "api_version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version",
+                  "example": "1"
+                },
+                "server_serie": {
+                  "type": "string",
+                  "description": "Server Serie",
+                  "example": "11.0"
+                },
+                "server_version": {
+                  "type": "string",
+                  "description": "Server Version",
+                  "example": "11.0-20180122"
+                },
+                "server_version_info": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Info",
+                    "example": "11, 0, 0, 'final', 0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/change_master_password": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "Change Master Password",
+        "description": "Changes the master password.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "password_new",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "password_old",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "$kajsd!§?"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "boolean",
+              "description": "Result",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "/api/authenticate": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate",
+        "description": "Generates the API token based on the given login informations.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "demo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token",
+            "schema": {
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "Token",
+                  "example": "tFss-VxvSVm58NE-z7gVdg"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['password']"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid login",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "invalid_login"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid database",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "invalid_db"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "REST API is not supported",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "rest_api_not_supported"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/life": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Life",
+        "description": "Returns the remaining lifetime to a given token.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Time",
+              "example": 2342
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/life/{token}": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Life",
+        "description": "Returns the remaining lifetime to a given token.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Time",
+              "example": 2342
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh",
+        "description": "Refreshes the token lifetime.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status",
+            "schema": {
+              "type": "boolean",
+              "description": "Status",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/close": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Close",
+        "description": "Closes the API connection.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status",
+            "schema": {
+              "type": "boolean",
+              "description": "Status",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Search",
+        "description": "Returns the search result.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "__last_update": "2017-12-31T03:13:29.000Z",
+                  "active": true,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "category_id": [],
+                  "child_ids": [],
+                  "city": null,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": "My Company",
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "1 My Company"
+                  ],
+                  "company_id": [
+                    "1 My Company"
+                  ],
+                  "company_name": false,
+                  "company_type": "company",
+                  "contact_address": "My Company\\n\\n\\n  \\n",
+                  "country_id": [],
+                  "create_date": false,
+                  "create_uid": [],
+                  "credit_limit": 0,
+                  "customer": false,
+                  "date": false,
+                  "display_name": "My Company",
+                  "email": [
+                    "email protected"
+                  ],
+                  "email_formatted": "My Company <[email protected]>",
+                  "employee": false,
+                  "function": false,
+                  "id": 1,
+                  "image": false,
+                  "image_medium": false,
+                  "image_small": false,
+                  "industry_id": [],
+                  "is_company": true,
+                  "lang": "en_US",
+                  "mobile": false,
+                  "name": "My Company",
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "phone": null,
+                  "ref": false,
+                  "self": [
+                    "1 My Company"
+                  ],
+                  "state_id": [],
+                  "street": null,
+                  "street2": false,
+                  "supplier": false,
+                  "title": [],
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": "http://www.yourcompany.com",
+                  "write_date": "2017-12-31T03:13:29.000Z",
+                  "write_uid": [
+                    "1 Administrator"
+                  ],
+                  "zip": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search/{model}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Search",
+        "description": "Returns the search result.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "__last_update": "2017-12-31T03:13:29.000Z",
+                  "active": true,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "category_id": [],
+                  "child_ids": [],
+                  "city": null,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": "My Company",
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "1 My Company"
+                  ],
+                  "company_id": [
+                    "1 My Company"
+                  ],
+                  "company_name": false,
+                  "company_type": "company",
+                  "contact_address": "My Company\\n\\n\\n  \\n",
+                  "country_id": [],
+                  "create_date": false,
+                  "create_uid": [],
+                  "credit_limit": 0,
+                  "customer": false,
+                  "date": false,
+                  "display_name": "My Company",
+                  "email": [
+                    "email protected"
+                  ],
+                  "email_formatted": "My Company <[email protected]>",
+                  "employee": false,
+                  "function": false,
+                  "id": 1,
+                  "image": false,
+                  "image_medium": false,
+                  "image_small": false,
+                  "industry_id": [],
+                  "is_company": true,
+                  "lang": "en_US",
+                  "mobile": false,
+                  "name": "My Company",
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "phone": null,
+                  "ref": false,
+                  "self": [
+                    "1 My Company"
+                  ],
+                  "state_id": [],
+                  "street": null,
+                  "street2": false,
+                  "supplier": false,
+                  "title": [],
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": "http://www.yourcompany.com",
+                  "write_date": "2017-12-31T03:13:29.000Z",
+                  "write_uid": [
+                    "1 Administrator"
+                  ],
+                  "zip": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search/{model}/{id}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Search",
+        "description": "Returns the search result.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "__last_update": "2017-12-31T03:13:29.000Z",
+                  "active": true,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "category_id": [],
+                  "child_ids": [],
+                  "city": null,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": "My Company",
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "1 My Company"
+                  ],
+                  "company_id": [
+                    "1 My Company"
+                  ],
+                  "company_name": false,
+                  "company_type": "company",
+                  "contact_address": "My Company\\n\\n\\n  \\n",
+                  "country_id": [],
+                  "create_date": false,
+                  "create_uid": [],
+                  "credit_limit": 0,
+                  "customer": false,
+                  "date": false,
+                  "display_name": "My Company",
+                  "email": [
+                    "email protected"
+                  ],
+                  "email_formatted": "My Company <[email protected]>",
+                  "employee": false,
+                  "function": false,
+                  "id": 1,
+                  "image": false,
+                  "image_medium": false,
+                  "image_small": false,
+                  "industry_id": [],
+                  "is_company": true,
+                  "lang": "en_US",
+                  "mobile": false,
+                  "name": "My Company",
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "phone": null,
+                  "ref": false,
+                  "self": [
+                    "1 My Company"
+                  ],
+                  "state_id": [],
+                  "street": null,
+                  "street2": false,
+                  "supplier": false,
+                  "title": [],
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": "http://www.yourcompany.com",
+                  "write_date": "2017-12-31T03:13:29.000Z",
+                  "write_uid": [
+                    "1 Administrator"
+                  ],
+                  "zip": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search/{model}/{id}/{limit}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Search",
+        "description": "Returns the search result.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "__last_update": "2017-12-31T03:13:29.000Z",
+                  "active": true,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "category_id": [],
+                  "child_ids": [],
+                  "city": null,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": "My Company",
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "1 My Company"
+                  ],
+                  "company_id": [
+                    "1 My Company"
+                  ],
+                  "company_name": false,
+                  "company_type": "company",
+                  "contact_address": "My Company\\n\\n\\n  \\n",
+                  "country_id": [],
+                  "create_date": false,
+                  "create_uid": [],
+                  "credit_limit": 0,
+                  "customer": false,
+                  "date": false,
+                  "display_name": "My Company",
+                  "email": [
+                    "email protected"
+                  ],
+                  "email_formatted": "My Company <[email protected]>",
+                  "employee": false,
+                  "function": false,
+                  "id": 1,
+                  "image": false,
+                  "image_medium": false,
+                  "image_small": false,
+                  "industry_id": [],
+                  "is_company": true,
+                  "lang": "en_US",
+                  "mobile": false,
+                  "name": "My Company",
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "phone": null,
+                  "ref": false,
+                  "self": [
+                    "1 My Company"
+                  ],
+                  "state_id": [],
+                  "street": null,
+                  "street2": false,
+                  "supplier": false,
+                  "title": [],
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": "http://www.yourcompany.com",
+                  "write_date": "2017-12-31T03:13:29.000Z",
+                  "write_uid": [
+                    "1 Administrator"
+                  ],
+                  "zip": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search/{model}/{id}/{limit}/{offset}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Search",
+        "description": "Returns the search result.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Read",
+        "description": "Returns the search result of the given fields.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              "name",
+              "mail"
+            ]
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read/{model}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Read",
+        "description": "Returns the search result of the given fields.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              "name",
+              "mail"
+            ]
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read/{model}/{id}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Read",
+        "description": "Returns the search result of the given fields.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              "name",
+              "mail"
+            ]
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read/{model}/{id}/{limit}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Read",
+        "description": "Returns the search result of the given fields.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              "name",
+              "mail"
+            ]
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read/{model}/{id}/{limit}/{offset}": {
+      "get": {
+        "tags": [
+          "Search & Read"
+        ],
+        "summary": "Read",
+        "description": "Returns the search result of the given fields.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              "name",
+              "mail"
+            ]
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              [
+                "id",
+                "=",
+                1
+              ]
+            ]
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "demo"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 80
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 0
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "name desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Records",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "id": 1,
+                  "name": "Awesome Inc"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/create": {
+      "post": {
+        "tags": [
+          "Create & Write & Delete"
+        ],
+        "summary": "Create",
+        "description": "Creates a new record.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "values",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "name": "MuK IT"
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "default_phone": "0000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Record",
+                "example": {
+                  "__last_update": "2018-05-25T17:23:59.000Z",
+                  "active": true,
+                  "activity_date_deadline": false,
+                  "activity_ids": [],
+                  "activity_state": false,
+                  "activity_summary": false,
+                  "activity_type_id": [],
+                  "activity_user_id": [],
+                  "bank_account_count": 0,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "calendar_last_notif_ack": false,
+                  "category_id": [],
+                  "channel_ids": [],
+                  "child_ids": [],
+                  "city": false,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": false,
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "577 MuK IT"
+                  ],
+                  "company_id": [
+                    "1 Awesome Inc"
+                  ],
+                  "company_name": false,
+                  "company_type": "person",
+                  "contact_address": "\\n\\n  \\n",
+                  "contract_ids": [],
+                  "contracts_count": 0,
+                  "country_id": [],
+                  "create_date": "2018-05-25T17:23:59.000Z",
+                  "create_uid": [
+                    "6 Demo"
+                  ],
+                  "credit": 0,
+                  "credit_limit": 0,
+                  "currency_id": [
+                    "1 EUR"
+                  ],
+                  "customer": true,
+                  "date": false,
+                  "debit": 0,
+                  "debit_limit": 0,
+                  "display_name": "MuK IT",
+                  "email": false,
+                  "email_formatted": "MuK IT <False>",
+                  "employee": false,
+                  "function": false,
+                  "has_unreconciled_entries": false,
+                  "id": 577,
+                  "im_status": "offline",
+                  "image": "16.04 Kb",
+                  "image_medium": "11.45 Kb",
+                  "image_small": "3.66 Kb",
+                  "industry_id": [],
+                  "invoice_ids": [],
+                  "invoice_warn": "no-message",
+                  "invoice_warn_msg": false,
+                  "is_company": false,
+                  "journal_item_count": 0,
+                  "lang": "en_US",
+                  "last_time_entries_checked": false,
+                  "last_website_so_id": [],
+                  "meeting_count": 0,
+                  "meeting_ids": [],
+                  "message_bounce": 0,
+                  "message_channel_ids": [],
+                  "message_follower_ids": [
+                    "448 Awesome Inc Demo"
+                  ],
+                  "message_ids": [
+                    "678 MuK IT"
+                  ],
+                  "message_is_follower": true,
+                  "message_last_post": false,
+                  "message_needaction": false,
+                  "message_needaction_counter": 0,
+                  "message_partner_ids": [
+                    "563 Awesome Inc Demo"
+                  ],
+                  "message_unread": false,
+                  "message_unread_counter": 0,
+                  "mobile": false,
+                  "name": "MuK IT",
+                  "opportunity_count": 0,
+                  "opportunity_ids": [],
+                  "opt_out": false,
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "payment_token_count": 0,
+                  "payment_token_ids": [],
+                  "phone": 0,
+                  "picking_warn": "no-message",
+                  "picking_warn_msg": false,
+                  "pos_order_count": 0,
+                  "property_account_payable_id": [
+                    "122 330000 Verbindlichkeiten aus Lieferungen u. Leistungen Inland"
+                  ],
+                  "property_account_position_id": [],
+                  "property_account_receivable_id": [
+                    "73 200000 2000 bis 2007 Forderungen aus Lief. und Leist. Inland"
+                  ],
+                  "property_payment_term_id": [],
+                  "property_product_pricelist": [
+                    "1 Public Pricelist (EUR)"
+                  ],
+                  "property_purchase_currency_id": [],
+                  "property_stock_customer": [
+                    "9 Lagerort beim Partner/Kunden"
+                  ],
+                  "property_stock_supplier": [
+                    "8 Lagerort beim Partner/Lieferanten"
+                  ],
+                  "property_supplier_payment_term_id": [],
+                  "purchase_order_count": 0,
+                  "purchase_warn": "no-message",
+                  "purchase_warn_msg": false,
+                  "ref": false,
+                  "ref_company_ids": [],
+                  "sale_order_count": 0,
+                  "sale_order_ids": [],
+                  "sale_warn": "no-message",
+                  "sale_warn_msg": false,
+                  "self": [
+                    "577 MuK IT"
+                  ],
+                  "signup_expiration": false,
+                  "signup_token": false,
+                  "signup_type": false,
+                  "signup_url": false,
+                  "signup_valid": false,
+                  "state_id": [],
+                  "street": false,
+                  "street2": false,
+                  "supplier": false,
+                  "supplier_invoice_count": 0,
+                  "task_count": 0,
+                  "task_ids": [],
+                  "team_id": [],
+                  "title": [],
+                  "total_invoiced": 0,
+                  "trust": "normal",
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": false,
+                  "website_message_ids": [],
+                  "wishlist_ids": [],
+                  "write_date": "2018-05-25T17:23:59.000Z",
+                  "write_uid": [
+                    "6 Demo"
+                  ],
+                  "zip": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/write": {
+      "put": {
+        "tags": [
+          "Create & Write & Delete"
+        ],
+        "summary": "Write",
+        "description": "Updates an existing record.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": [
+              1,
+              2
+            ]
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "values",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "name": "MuK IT"
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "default_phone": "0000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status",
+            "schema": {
+              "type": "boolean",
+              "description": "Status",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/unlink": {
+      "delete": {
+        "tags": [
+          "Create & Write & Delete"
+        ],
+        "summary": "Unlink",
+        "description": "Deletes an existing record.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": [
+              1,
+              2
+            ]
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "default_phone": "0000"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status",
+            "schema": {
+              "type": "boolean",
+              "description": "Status",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/call": {
+      "post": {
+        "tags": [
+          "Generic Request"
+        ],
+        "summary": "Call",
+        "description": "Generic method call.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "copy"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": [
+              2
+            ]
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {
+              "bin_size": "True"
+            }
+          },
+          {
+            "name": "args",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": []
+          },
+          {
+            "name": "kwargs",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Result",
+                "example": {
+                  "__last_update": "2018-05-25T17:46:51.000Z",
+                  "active": false,
+                  "activity_date_deadline": false,
+                  "activity_ids": [],
+                  "activity_state": false,
+                  "activity_summary": false,
+                  "activity_type_id": [],
+                  "activity_user_id": [],
+                  "bank_account_count": 0,
+                  "bank_ids": [],
+                  "barcode": false,
+                  "calendar_last_notif_ack": false,
+                  "category_id": [],
+                  "channel_ids": [],
+                  "child_ids": [],
+                  "city": false,
+                  "color": 0,
+                  "comment": false,
+                  "commercial_company_name": false,
+                  "commercial_partner_country_id": [],
+                  "commercial_partner_id": [
+                    "580 Public user (Kopie)"
+                  ],
+                  "company_id": [
+                    "1 MuK IT"
+                  ],
+                  "company_name": false,
+                  "company_type": "person",
+                  "contact_address": "\\n\\n  \\n",
+                  "contract_ids": [],
+                  "contracts_count": 0,
+                  "country_id": [],
+                  "create_date": "2018-05-25T17:46:51.000Z",
+                  "create_uid": [
+                    "6 Demo"
+                  ],
+                  "credit": 0,
+                  "credit_limit": 0,
+                  "currency_id": [
+                    "1 EUR"
+                  ],
+                  "customer": true,
+                  "date": false,
+                  "debit": 0,
+                  "debit_limit": 0,
+                  "display_name": "Public user (Kopie)",
+                  "email": false,
+                  "email_formatted": "\\Public user (Kopie)\\ <False>",
+                  "employee": false,
+                  "function": false,
+                  "has_unreconciled_entries": false,
+                  "id": 580,
+                  "im_status": "offline",
+                  "image": "15.16 Kb",
+                  "image_medium": "10.88 Kb",
+                  "image_small": "3.34 Kb",
+                  "industry_id": [],
+                  "invoice_ids": [],
+                  "invoice_warn": "no-message",
+                  "invoice_warn_msg": false,
+                  "is_company": false,
+                  "journal_item_count": 0,
+                  "lang": "en_US",
+                  "last_time_entries_checked": false,
+                  "last_website_so_id": [],
+                  "meeting_count": 0,
+                  "meeting_ids": [],
+                  "message_bounce": 0,
+                  "message_channel_ids": [],
+                  "message_follower_ids": [
+                    "451 MuK IT Demo"
+                  ],
+                  "message_ids": [
+                    "681 Public user (Kopie)"
+                  ],
+                  "message_is_follower": true,
+                  "message_last_post": false,
+                  "message_needaction": false,
+                  "message_needaction_counter": 0,
+                  "message_partner_ids": [
+                    "563 MuK IT Demo"
+                  ],
+                  "message_unread": false,
+                  "message_unread_counter": 0,
+                  "mobile": false,
+                  "name": "Public user (Kopie)",
+                  "opportunity_count": 0,
+                  "opportunity_ids": [],
+                  "opt_out": false,
+                  "parent_id": [],
+                  "parent_name": false,
+                  "partner_share": true,
+                  "payment_token_count": 0,
+                  "payment_token_ids": [],
+                  "phone": false,
+                  "picking_warn": "no-message",
+                  "picking_warn_msg": false,
+                  "pos_order_count": 0,
+                  "property_account_payable_id": [
+                    "122 330000 Verbindlichkeiten aus Lieferungen u. Leistungen Inland"
+                  ],
+                  "property_account_position_id": [],
+                  "property_account_receivable_id": [
+                    "73 200000 2000 bis 2007 Forderungen aus Lief. und Leist. Inland"
+                  ],
+                  "property_payment_term_id": [],
+                  "property_product_pricelist": [
+                    "1 Public Pricelist (EUR)"
+                  ],
+                  "property_purchase_currency_id": [],
+                  "property_stock_customer": [
+                    "9 Partner Locations/Customers"
+                  ],
+                  "property_stock_supplier": [
+                    "8 Partner Locations/Vendors"
+                  ],
+                  "property_supplier_payment_term_id": [],
+                  "purchase_order_count": 0,
+                  "purchase_warn": "no-message",
+                  "purchase_warn_msg": false,
+                  "ref": false,
+                  "ref_company_ids": [],
+                  "sale_order_count": 0,
+                  "sale_order_ids": [],
+                  "sale_warn": "no-message",
+                  "sale_warn_msg": false,
+                  "self": [
+                    "580 Public user (Kopie)"
+                  ],
+                  "signup_expiration": false,
+                  "signup_token": false,
+                  "signup_type": false,
+                  "signup_url": false,
+                  "signup_valid": false,
+                  "state_id": [],
+                  "street": false,
+                  "street2": false,
+                  "supplier": false,
+                  "supplier_invoice_count": 0,
+                  "task_count": 0,
+                  "task_ids": [],
+                  "team_id": [],
+                  "title": [],
+                  "total_invoiced": 0,
+                  "trust": "normal",
+                  "type": "contact",
+                  "tz": false,
+                  "tz_offset": 0,
+                  "user_id": [],
+                  "user_ids": [],
+                  "vat": false,
+                  "website": false,
+                  "website_message_ids": [],
+                  "wishlist_ids": [],
+                  "write_date": "2018-05-25T17:46:51.000Z",
+                  "write_uid": [
+                    "6 Demo"
+                  ],
+                  "zip": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Report",
+        "description": "Generate reports.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "ir.model"
+          },
+          {
+            "name": "report",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "base.report_ir_model_overview"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": [
+              8
+            ]
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "html",
+              "pdf"
+            ],
+            "x-example": "pdf"
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          },
+          {
+            "name": "args",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": []
+          },
+          {
+            "name": "kwargs",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Report",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report{model}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Report",
+        "description": "Generate reports.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "ir.model"
+          },
+          {
+            "name": "report",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "base.report_ir_model_overview"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": [
+              8
+            ]
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "html",
+              "pdf"
+            ],
+            "x-example": "pdf"
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          },
+          {
+            "name": "args",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": []
+          },
+          {
+            "name": "kwargs",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Report",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report{model}/{report}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Report",
+        "description": "Generate reports.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "ir.model"
+          },
+          {
+            "name": "report",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "base.report_ir_model_overview"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": [
+              8
+            ]
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "html",
+              "pdf"
+            ],
+            "x-example": "pdf"
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          },
+          {
+            "name": "args",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": []
+          },
+          {
+            "name": "kwargs",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Report",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/binary": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Binary",
+        "description": "Downloads a binary file.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "xmlid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "xmlid"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas"
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "document.pdf"
+          },
+          {
+            "name": "filename_field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas_fname"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "False"
+          },
+          {
+            "name": "mimetype",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "application/pdf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/binary/{xmlid}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Binary",
+        "description": "Downloads a binary file.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "xmlid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "xmlid"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas"
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "document.pdf"
+          },
+          {
+            "name": "filename_field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas_fname"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "False"
+          },
+          {
+            "name": "mimetype",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "application/pdf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/binary/{xmlid}/{filename}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Binary",
+        "description": "Downloads a binary file.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "xmlid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "xmlid"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas"
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "document.pdf"
+          },
+          {
+            "name": "filename_field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas_fname"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "False"
+          },
+          {
+            "name": "mimetype",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "application/pdf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/binary/{model}/{id}/{field}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Binary",
+        "description": "Downloads a binary file.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "xmlid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "xmlid"
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "field",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "datas"
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "document.pdf"
+          },
+          {
+            "name": "filename_field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas_fname"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "False"
+          },
+          {
+            "name": "mimetype",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "application/pdf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/binary/{model}/{id}/{field}/{filename}": {
+      "get": {
+        "tags": [
+          "Reports and Files"
+        ],
+        "summary": "Binary",
+        "description": "Downloads a binary file.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "tFss-VxvSVm58NE-z7gVdg"
+          },
+          {
+            "name": "db",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "demo"
+          },
+          {
+            "name": "xmlid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "xmlid"
+          },
+          {
+            "name": "model",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "res.partner"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 1
+          },
+          {
+            "name": "field",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "datas"
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "x-example": "document.pdf"
+          },
+          {
+            "name": "filename_field",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "datas_fname"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-example": "False"
+          },
+          {
+            "name": "mimetype",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "application/pdf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['token']"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid token",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "token_invalid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/list": {
+      "get": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Database List",
+        "description": "List the available databases.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "System information",
+            "schema": {
+              "properties": {
+                "databases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Databases",
+                    "example": "rest"
+                  }
+                },
+                "incompatible_databases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Incompatible Databases",
+                    "example": "rest_v10"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/create": {
+      "post": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Database Create",
+        "description": "Creates a new database.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "database_name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "rest"
+          },
+          {
+            "name": "admin_login",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "admin_password",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "master_password",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "de_DE"
+          },
+          {
+            "name": "country_code",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "at"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "boolean",
+              "description": "Result",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['master_password']"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/duplicate": {
+      "post": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Database Duplicate",
+        "description": "Duplicate a database.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "database_old",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "rest"
+          },
+          {
+            "name": "database_new",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "copy"
+          },
+          {
+            "name": "master_password",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "admin"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "boolean",
+              "description": "Result",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['master_password']"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/drop": {
+      "post": {
+        "tags": [
+          "Database"
+        ],
+        "summary": "Database Drop",
+        "description": "Drops a database.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "database_name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "rest"
+          },
+          {
+            "name": "master_password",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "admin"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "boolean",
+              "description": "Result",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['master_password']"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/backup": {
+      "post": {
+        "tags": [
+          "Backup & Restore"
+        ],
+        "summary": "Database Backup",
+        "description": "Creates a backup.",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "database_name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "rest"
+          },
+          {
+            "name": "master_password",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "backup_format",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "zip",
+              "dump"
+            ],
+            "x-example": "zip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "description": "Binary",
+              "example": "File"
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['master_password']"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/database/restore": {
+      "post": {
+        "tags": [
+          "Backup & Restore"
+        ],
+        "summary": "Database Restore",
+        "description": "Restores a backup.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "database_name",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-example": "rest"
+          },
+          {
+            "name": "backup_file",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "binary",
+            "x-example": "File"
+          },
+          {
+            "name": "master_password",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "admin"
+          },
+          {
+            "name": "backup_format",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "zip",
+              "dump"
+            ],
+            "x-example": "zip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "boolean",
+              "description": "Result",
+              "example": true
+            }
+          },
+          "400": {
+            "description": "Arguments missing or invalid",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error",
+                  "example": "arguments_missing ['master_password']"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
