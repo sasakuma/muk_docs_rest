@@ -33,7 +33,7 @@ tags:
     description: 'Operations to manipulate data from the system'
   - name: 'Generic Request'
     description: 'A generic request to call any method in the system'
-  - name: 'Reports and Files'
+  - name: 'Reports & Files'
     description: 'Operations to generate reports or download files'
   - name: 'Database'
     description: 'Operations interact with the database'
