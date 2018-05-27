@@ -337,7 +337,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/search:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Search'
@@ -493,7 +493,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/search/{model}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Search'
@@ -650,7 +650,7 @@ paths:
                 example: "token_invalid"
                 
   /api/search/{model}/{id}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Search'
@@ -806,7 +806,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/search/{model}/{id}/{limit}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Search'
@@ -962,7 +962,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/search/{model}/{id}/{limit}/{offset}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Search'
@@ -1051,7 +1051,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/read:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Read'
@@ -1145,7 +1145,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/read/{model}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Read'
@@ -1240,7 +1240,7 @@ paths:
                 example: "token_invalid"
                 
   /api/read/{model}/{id}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Read'
@@ -1334,7 +1334,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/read/{model}/{id}/{limit}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Read'
@@ -1428,7 +1428,7 @@ paths:
                 description: "Error"
                 example: "token_invalid"
   /api/read/{model}/{id}/{limit}/{offset}:
-    post:
+    get:
       tags:
         - "Search & Read"
       summary: 'Read'
